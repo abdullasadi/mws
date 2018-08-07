@@ -9,6 +9,10 @@
 	<!-- Data table JavaScript -->
 	<script src="vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
 
+	<!-- Bootstrap-table JavaScript -->
+	<script src="vendors/bower_components/bootstrap-table/dist/bootstrap-table.min.js"></script>
+	<script src="dist/js/bootstrap-table-data.js"></script>
+
 	<!-- Slimscroll JavaScript -->
 	<script src="dist/js/jquery.slimscroll.js"></script>
 
@@ -34,9 +38,9 @@
 	<script src="vendors/chart.js/Chart.min.js"></script>
 
 	<!-- Morris Charts JavaScript -->
-    <script src="vendors/bower_components/raphael/raphael.min.js"></script>
-    <script src="vendors/bower_components/morris.js/morris.min.js"></script>
-    <script src="vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
+	<script src="vendors/bower_components/raphael/raphael.min.js"></script>
+	<script src="vendors/bower_components/morris.js/morris.min.js"></script>
+	<script src="vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
 
 	<!-- Switchery JavaScript -->
 	<script src="vendors/bower_components/switchery/dist/switchery.min.js"></script>

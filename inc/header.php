@@ -22,6 +22,9 @@
 		
 	<!-- Custom CSS -->
 	<link href="dist/css/style.css" rel="stylesheet" type="text/css">
+
+	<!-- Custom CSS By Maruf -->
+	<link rel="stylesheet" href="css/app.css">
 </head>
 
 <body>
