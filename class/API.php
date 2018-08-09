@@ -7,8 +7,6 @@ class API extends Db{
   private $api_key;
   private $api_secret;
 
-
-
   public function dvr_api($start) {
     $post = [
         'api_key' => 'Maruf',
@@ -48,7 +46,13 @@ class API extends Db{
       if($s_count > 0) {
         echo '{"status": "error", "message": "Product already in the system", "head": "Import Error"}';
       } else {
-        echo '{"status": "success", "message": "Data has been imported", "head": "Import Success"}';
+        $add_qry = $this->handeller->query("INSERT INTO products SET p_source = 'security', p_title = '$product[name]', p_fulldes = '$product[description]', p_images = '$product[image]', p_cost_price = '', p_lowest_range = '', p_profit = '', p_ean = '$product[ean]', p_upc = '$product[upc]', p_model = '$product[model]', p_mpn = '$product[mpn]', p_dem = '', p_weight = '$product[weight]', p_brand = '', p_marketid = '', p_marketurl = '', p_self_id = '', p_self_url = '', p_qty = '$product[quantity]', p_rank = '', p_saleprice = '', p_batch_id = '', p_amazon_status = '', p_status = '', time = ''");
+
+        if($add_qry) {
+          echo '{"status": "success", "message": "Data has been imported", "head": "Import Success"}';
+        } else {
+          echo '{"status": "error", "message": "Product already in the system", "head": "Import Error"}';
+        }
       }
 
     } else {

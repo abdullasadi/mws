@@ -31,7 +31,7 @@ class Db extends PDO{
 				$this->handeller->getAttribute(PDO::ATTR_ERRMODE);
 				}catch(PDOException $e){
 					die($e);
-					}
+				}
 
 
 		}

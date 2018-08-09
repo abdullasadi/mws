@@ -217,7 +217,7 @@ require('inc/navbar.php');
     $.ajax({
       url: "ajax_request.php",
       type: 'POST',
-      dataType: 'json',
+      // dataType: 'json',
       contex: this,
       data: {
         'token': '<?php echo Config::get('csrf_token'); ?>',
@@ -225,7 +225,7 @@ require('inc/navbar.php');
         'p_id': p_id
       }
     }).done(function(results) {
-      //console.log(results);
+      console.log(results);
       $.toast({
     		heading: results.head,
     		text: results.message,
