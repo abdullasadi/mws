@@ -48,7 +48,7 @@ class API extends Db{
         echo '{"status": "error", "message": "Product already in the system", "head": "Import Error"}';
       } else {
         $name = $product['name'];
-        $description = $product['description'];
+        $description = str_replace("'", "", $product['description']);
         $image = $product['image'];
         $ean = $product['ean'];
         $upc = $product['upc'];
@@ -57,9 +57,9 @@ class API extends Db{
         $weight = $product['weight'];
         $quantity = $product['quantity'];
         $price = $product['price'];
-        
 
-        $add_qry = $this->handeller->query("INSERT INTO `products` (`p_source`, `p_title`, `p_fulldes`, `p_images`, `p_cost_price`, `p_lowest_range`, `p_profit`, `p_ean`, `p_upc`, `p_model`, `p_mpn`, `p_dem`, `p_weight`, `p_brand`, `p_marketid`, `p_marketurl`, `p_self_id`, `p_self_url`, `p_qty`, `p_rank`, `p_saleprice`, `p_batch_id`, `p_amazon_status`, `p_status`, `time`) VALUES ('security', 'amazon', 'amazon', 'amazon', '0', '0', '0', '545', '454', '5555', '4444', '4444', '4444', '4444', '4444', '4444', '4444', '4444', '4444', '0', '0', '5', '4444', '0', '2018-08-09')");
+
+        $add_qry = $this->handeller->query("INSERT INTO `products` (`p_source`, `p_title`, `p_fulldes`, `p_images`, `p_cost_price`, `p_lowest_range`, `p_profit`, `p_ean`, `p_upc`, `p_model`, `p_mpn`, `p_dem`, `p_weight`, `p_brand`, `p_marketid`, `p_marketurl`, `p_self_id`, `p_self_url`, `p_qty`, `p_rank`, `p_saleprice`, `p_batch_id`, `p_amazon_status`, `p_status`, `time`) VALUES ('security', '$name', '$description', '$image', '0', '0', '0', '$ean', '$upc', '$model', '$mpn', '0', '$weight', '0', '0', '0', '0', '$quantity', '0', '$price', '0', '0', '0', '0', '2018-08-09')");
 
         if($add_qry) {
           echo '{"status": "success", "message": "Data has been imported", "head": "Import Success"}';
