@@ -226,13 +226,12 @@ require('inc/navbar.php');
       }
     }).done(function(results) {
       console.log(results);
-
       // $.toast({
-    	// 	heading: 'Welcome to Hound',
-    	// 	text: 'Use the predefined ones, or specify a custom position object.',
+    	// 	heading: results.head,
+    	// 	text: results.message,
     	// 	position: 'top-right',
     	// 	loaderBg:'#fec107',
-    	// 	icon: 'success',
+    	// 	icon: results.status,
     	// 	hideAfter: 3500,
     	// 	stack: 6
     	// });
