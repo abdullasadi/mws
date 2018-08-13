@@ -103,22 +103,47 @@ class PetraApi extends Db {
 
 
 
-        $add_qry = $this->handeller->query("INSERT INTO `petra_products` (`pt_sku`, `pt_seller_sku`, `pt_name`, `pt_upc`, `pt_description`, `pt_brand`, `pt_cost_price`, `pt_qty`, `pt_category`, `pt_weight`, `pt_lenth`, `pt_width`, `pt_height`, `pt_returnable`, `pt_refurbish`, `pt_image`, `pt_bullet1`, `pt_bullet2`, `pt_bullet3`, `pt_bullet4`, `status`) VALUES ('$sku', '$seller_sku', '$name', '$upc', '$description', '$brand', '$cost_price', '$qty', '$category', '$weight', '$lenth', '$width', '$height', '$returnable', '$refurbish', '$image', '$bullets', '0', '0', '0', 'y')");
+        $add_qry = $this->handeller->query("INSERT INTO `petra_products` (`pt_sku`, `pt_seller_sku`, `pt_name`, `pt_upc`, `pt_description`, `pt_brand`, `pt_cost_price`, `pt_qty`, `pt_category`, `pt_weight`, `pt_lenth`, `pt_width`, `pt_height`, `pt_returnable`, `pt_refurbish`, `pt_image`, `pt_bullet1`, `pt_bullet2`, `pt_bullet3`, `pt_bullet4`, `status`) VALUES ('$sku', '$seller_sku', '$name', '$upc', '$description', '$brand', '$cost_price', '$qty', '$category', '$weight', '$lenth', '$width', '$height', '$returnable', '$refurbish', '$image', '$bullets', '0', '0', '0', '1')");
   		}
   }
 
-  public function petra_data($id) {
-    $post = [
-        'api_key' => 'Maruf',
-        'api_secret' => '77b55e1c91cc0daf73662d4b2dac7ec5b0344e90',
-    ];
+  // public function petra_data($id) {
+  //   $post = [
+  //       'api_key' => 'Maruf',
+  //       'api_secret' => '77b55e1c91cc0daf73662d4b2dac7ec5b0344e90',
+  //   ];
+  //
+  //   $ch = curl_init('hitechwebdesign.net:5000/petra_products/Maruf/77b55e1c91cc0daf73662d4b2dac7ec5b0344e90/'.$id);
+  //   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  //   curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+  //   $response = curl_exec($ch);
+  //   curl_close($ch);
+  //   // $response = json_encode($response);
+  //   echo $response;
+  // }
 
-    $ch = curl_init('hitechwebdesign.net:5000/petra_products/Maruf/77b55e1c91cc0daf73662d4b2dac7ec5b0344e90/'.$id);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-    $response = curl_exec($ch);
-    curl_close($ch);
-    // $response = json_encode($response);
-    echo $response;
+  public function get_data($start) {
+    $products = array();
+    $totalQry = $this->handeller->query("SELECT * FROM `petra_products` WHERE pt_sku NOT IN (SELECT p_model FROM dvr_products)");
+    $totalCount = $totalQry->rowCount();
+    $qry = $this->handeller->query("SELECT * FROM `petra_products` WHERE pt_sku NOT IN (SELECT p_model FROM dvr_products) ORDER BY pt_id ASC LIMIT $start, 100");
+    $rows = $qry->fetchAll(PDO::FETCH_ASSOC);
+    foreach($rows as $row){
+      $p = [
+        'pt_id' => $row['pt_id'],
+        'pt_name' => $row['pt_name'],
+        'pt_image' => $row['pt_image'],
+        'pt_cost_price' => $row['pt_cost_price'],
+        'pt_brand' => $row['pt_brand'],
+        'pt_qty' => $row['pt_qty']
+      ];
+      array_push($products, $p);
+    }
+    $response = [
+      'status' => '200',
+      'totalCount' => $totalCount,
+      'products' => $products,
+    ];
+    echo json_encode($response);
   }
 }

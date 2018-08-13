@@ -102,7 +102,7 @@ require('inc/navbar.php');
          'start': 1
        }
      }).done(function(results) {
-       console.log(results);
+       // console.log(results);
        $('.product-tr').empty();
        for(let product of results.products) {
          $('.product-tr').append(`

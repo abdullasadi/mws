@@ -23,6 +23,6 @@ if(Config::get('base.request_method') == 'POST') {
 if(Config::get('base.request_method') == 'POST') {
   if($_POST['type'] == 'petra_data') {
     $start = ($_POST['start'] - 1) * 100;
-    $petra->petra_data($start);
+    $petra->get_data($start);
   }
 }
