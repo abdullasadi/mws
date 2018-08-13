@@ -449,7 +449,8 @@ require('inc/navbar.php');
 </div>
 <!-- /Main Content -->
 
+<?php require('inc/scripts.php'); ?>
+
 <?php
 require('inc/footer.php');
-
 ?>

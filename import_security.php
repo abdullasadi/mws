@@ -217,7 +217,7 @@ require('inc/navbar.php');
     $.ajax({
       url: "ajax_request.php",
       type: 'POST',
-      // dataType: 'json',
+      dataType: 'json',
       contex: this,
       data: {
         'token': '<?php echo Config::get('csrf_token'); ?>',
