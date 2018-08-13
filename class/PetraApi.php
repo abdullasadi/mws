@@ -135,7 +135,9 @@ class PetraApi extends Db {
         'pt_image' => $row['pt_image'],
         'pt_cost_price' => $row['pt_cost_price'],
         'pt_brand' => $row['pt_brand'],
-        'pt_qty' => $row['pt_qty']
+        'pt_qty' => $row['pt_qty'],
+        'pt_returnable' => $row['pt_returnable'],
+        'pt_refurbish' => $row['pt_refurbish']
       ];
       array_push($products, $p);
     }
