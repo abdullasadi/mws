@@ -115,7 +115,7 @@ require('inc/navbar.php');
          $('.product-tr').append(`
            <tr>
              <td>
-               <input id="checkbox1" class="checkboxAll" type="checkbox" name="checkbox" value="${ product.pt_id }">
+               <input id="checkbox1" class="selectAll" type="checkbox" name="checkbox" value="${ product.pt_id }">
              </td>
              <td class="product-img-td">
                <img class="product-table-img" src="${product.pt_image}" alt="">
@@ -209,7 +209,7 @@ require('inc/navbar.php');
         $('.product-tr').append(`
           <tr>
             <td>
-              <input id="checkbox1" class="checkboxAll" type="checkbox" name="checkbox" value="${ product.pt_id }">
+              <input id="checkbox1" class="selectAll" type="checkbox" name="checkbox" value="${ product.pt_id }">
             </td>
             <td class="product-img-td">
               <img class="product-table-img" src="${product.pt_image}" alt="">
@@ -227,13 +227,23 @@ require('inc/navbar.php');
     });
   })
 
-    $("#selectAll").click(function(){
-        // alert("just for check");
-        if (this.checked)
-           $(".selectAll").attr('checked', "checked");
-        else
-           $(".selectAll").removeAttr('checked');
-      });
+
+
+  $('#selectAll').on('click',function(){
+        if(this.checked){
+            $('.selectAll').each(function(){
+                this.checked = true;
+            });
+        }else{
+             $('.selectAll').each(function(){
+                this.checked = false;
+            });
+        }
+    });
+
+    
+
+
 </script>
 
 <?php
