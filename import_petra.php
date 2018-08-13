@@ -35,6 +35,9 @@ require('inc/navbar.php');
                   <table class="table table-hover table-bordered mb-0">
                     <thead>
                       <tr>
+                        <th>
+                          <input id="selectAll" type="checkbox">
+                        </th>
                         <th>Image</th>
                         <th>Name</th>
                         <th>Price</th>
@@ -88,6 +91,10 @@ require('inc/navbar.php');
          <td>
            <i class="fa fa-spin fa-spinner"></i>
          </td>
+         </td>
+         <td>
+           <i class="fa fa-spin fa-spinner"></i>
+         </td>
        </tr>
      `);
 
@@ -107,6 +114,9 @@ require('inc/navbar.php');
        for(let product of results.products) {
          $('.product-tr').append(`
            <tr>
+             <td>
+               <input id="checkbox1" class="checkboxAll" type="checkbox" name="checkbox" value="${ product.pt_id }">
+             </td>
              <td class="product-img-td">
                <img class="product-table-img" src="${product.pt_image}" alt="">
              </td>
@@ -162,6 +172,9 @@ require('inc/navbar.php');
         <td>
           <i class="fa fa-spin fa-spinner"></i>
         </td>
+        <td>
+          <i class="fa fa-spin fa-spinner"></i>
+        </td>
       </tr>
       `);
     let start = $(this).attr('data-start');
@@ -195,6 +208,9 @@ require('inc/navbar.php');
       for(let product of results.products) {
         $('.product-tr').append(`
           <tr>
+            <td>
+              <input id="checkbox1" class="checkboxAll" type="checkbox" name="checkbox" value="${ product.pt_id }">
+            </td>
             <td class="product-img-td">
               <img class="product-table-img" src="${product.pt_image}" alt="">
             </td>
@@ -210,6 +226,14 @@ require('inc/navbar.php');
       }
     });
   })
+
+    $("#selectAll").click(function(){
+        // alert("just for check");
+        if (this.checked)
+           $(".selectAll").attr('checked', "checked");
+        else
+           $(".selectAll").removeAttr('checked');
+      });
 </script>
 
 <?php
