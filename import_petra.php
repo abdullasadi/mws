@@ -112,23 +112,27 @@ require('inc/navbar.php');
        // console.log(results);
        $('.product-tr').empty();
        for(let product of results.products) {
-         $('.product-tr').append(`
-           <tr>
-             <td>
-               <input id="checkbox1" class="selectAll" type="checkbox" name="checkbox" value="${ product.pt_id }">
-             </td>
-             <td class="product-img-td">
-               <img class="product-table-img" src="${product.pt_image}" alt="">
-             </td>
-             <td>${product.pt_name}</td>
-             <td>$${product.pt_cost_price}</td>
-             <td>${product.pt_brand}</td>
-             <td>${product.pt_qty}</td>
-             <td class="text-nowrap">
-               <button data-id="${ product.pt_id }" class="btn btn-info btn-outline btn-icon right-icon import-btn"><span>Import</span><i class="fa fa-cloud-upload"></i></button>
-             </td>
-           </tr>
-         `);
+         let checkboxHtml;
+         if(product.pt_returnable == 'Y' && product.pt_refurbish == 'N') {
+           checkboxHtml = `<td>
+             <input id="checkbox1" class="selectAll" type="checkbox" name="checkbox" value="${ product.pt_id }">
+           </td>`;
+         } else {
+           checkboxHtml = `<td></td>`;
+         }
+         $('.product-tr').append(`<tr>
+           ${checkboxHtml}
+           <td class="product-img-td">
+             <img class="product-table-img" src="${product.pt_image}" alt="">
+           </td>
+           <td>${product.pt_name}</td>
+           <td>$${product.pt_cost_price}</td>
+           <td>${product.pt_brand}</td>
+           <td>${product.pt_qty}</td>
+           <td class="text-nowrap">
+             <button data-id="${ product.pt_id }" class="btn btn-info btn-outline btn-icon right-icon import-btn"><span>Import</span><i class="fa fa-cloud-upload"></i></button>
+           </td>
+         </tr>`);
        }
 
        var total = results.totalCount;
@@ -206,11 +210,17 @@ require('inc/navbar.php');
       }
       // Table
       for(let product of results.products) {
+        let checkboxHtml;
+        if(product.pt_returnable == 'Y' && product.pt_refurbish == 'N') {
+          checkboxHtml = `<td>
+            <input id="checkbox1" class="selectAll" type="checkbox" name="checkbox" value="${ product.pt_id }">
+          </td>`;
+        } else {
+          checkboxHtml = `<td></td>`;
+        }
         $('.product-tr').append(`
           <tr>
-            <td>
-              <input id="checkbox1" class="selectAll" type="checkbox" name="checkbox" value="${ product.pt_id }">
-            </td>
+            ${checkboxHtml}
             <td class="product-img-td">
               <img class="product-table-img" src="${product.pt_image}" alt="">
             </td>
@@ -241,7 +251,7 @@ require('inc/navbar.php');
         }
     });
 
-    
+
 
 
 </script>
