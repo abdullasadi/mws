@@ -1,9 +1,7 @@
 <?php
 require_once('inc/middleware.php');
 
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
-  print_r($_POST);
-}
+
 
 require('inc/header.php');
 require('inc/navbar.php');
@@ -122,7 +120,7 @@ require('inc/navbar.php');
          let importButton;
          if(product.pt_returnable == 'Y' && product.pt_refurbish == 'N') {
            checkboxHtml = `<td>
-             <input id="checkbox1" class="selectAll" type="checkbox" name="checkbox" value="${ product.pt_id }">
+             <input id="checkbox1" class="selectAll" type="checkbox" name="checkbox[]" value="${ product.pt_id }">
            </td>`;
            importButton = `<td class="text-nowrap">
              <button data-id="${ product.pt_id }" class="btn btn-info btn-outline btn-icon right-icon import-btn"><span>Import</span><i class="fa fa-cloud-upload"></i></button>
@@ -223,7 +221,7 @@ require('inc/navbar.php');
         let importButton;
         if(product.pt_returnable == 'Y' && product.pt_refurbish == 'N') {
           checkboxHtml = `<td>
-            <input id="checkbox1" class="selectAll" type="checkbox" name="checkbox" value="${ product.pt_id }">
+            <input id="checkbox1" class="selectAll" type="checkbox" name="checkbox[]" value="${ product.pt_id }">
           </td>`;
           importButton = `<td class="text-nowrap">
             <button data-id="${ product.pt_id }" class="btn btn-info btn-outline btn-icon right-icon import-btn"><span>Import</span><i class="fa fa-cloud-upload"></i></button>
@@ -270,17 +268,8 @@ require('inc/navbar.php');
     $(document).on('click', '.petra', function() {
       $('.petraForm').submit();
     });
-    
-    //
-    // (function($){
-    //   $("body").on("submit", ".petraForm", function(e){
-    //     e.preventDefault();
-    //     var form = $(e.target);
-    //     $.post( form.attr("action"), form.serialize(), function(res){
-    //         console.log($(".petraForm").serializeArray());
-    //     });
-    //   });
-    // })(jQuery);
+
+
 
 </script>
 
