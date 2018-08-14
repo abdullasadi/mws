@@ -1,7 +1,9 @@
 <?php
 require_once('inc/middleware.php');
 
+$petra = new PetraApi;
 
+$petra->importData(2);
 
 require('inc/header.php');
 require('inc/navbar.php');

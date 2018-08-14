@@ -148,4 +148,68 @@ class PetraApi extends Db {
     ];
     echo json_encode($response);
   }
+
+  public function importData($id) {
+    $queryData = $this->handeller->query("SELECT * FROM `petra_products` WHERE pt_id = '$id'");
+    $row = $queryData->fetch(PDO::FETCH_ASSOC);
+
+    $name = $row['pt_description'];
+    $sku = $row['pt_sku'];
+    $upc = $row['pt_upc'];
+    $desc = '';
+    $brand = $row['pt_brand'];
+    $cost_price = $row['pt_cost_price'];
+    $weight = $row['pt_weight'];
+    $height = $row['pt_height'];
+    $lenth = $row['pt_lenth'];
+    $width = $row['pt_width'];
+    $category = $row['pt_category'];
+    $image = $row['pt_image'];
+    $qty = $row['pt_qty'];
+
+    $name = str_replace('(TM)', '', $name);
+    $name = str_replace('(R)', '', $name);
+    $name = str_replace('GOPRO', '', $name);
+    $desc = $name;
+
+    if($row['pt_cost_price'] <= '10'){
+			$price = (((50/100) * $row['pt_cost_price']) + $row['pt_cost_price'])+7;
+		}elseif($row['pt_cost_price'] >= '11' && $row['pt_cost_price'] <= '30'){
+			$price = (((30/100) * $row['pt_cost_price']) + $row['pt_cost_price'])+7;
+		}elseif($row['pt_cost_price'] >= '31' && $row['pt_cost_price'] <= '60'){
+			$price = (((20/100) * $row['pt_cost_price']) + $row['pt_cost_price'])+7;
+		}else{
+			$price = (((20/100) * $row['pt_cost_price']) + $row['pt_cost_price'])+7;
+		}
+
+    if($weight > '5'){
+			$price = $price + 10;
+		}
+
+    if($category === 'Appliance Accessories, Tools & RTO'){
+  		$cats = "appliance-replacement-parts";
+		}elseif($category === 'Automotive, Marine & GPS'){
+			$cats = "vehicle-electronics";
+		}elseif($category === 'Cell Phones & Accessories '){
+			$cats = "cell-phone-accessories";
+		}elseif($category === 'Computer Peripherals & Home Office'){
+			$cats = "computer-and-mobile-device-repair-kits";
+		}elseif($category === 'Home Theater & Custom Install'){
+			$cats = "audio-video-cables-and-connectors";
+		}elseif($category === 'Housewares & Personal Care'){
+			$cats = "handheld-personal-digital-assistants";
+		}elseif($category === 'Outdoor, Recreation & Fitness'){
+			$cats = "handheld-personal-digital-assistants";
+		}elseif($category === 'Portable & Personal Electronics'){
+			$cats = "handheld-personal-digital-assistants";
+		}else{
+			$cats = "audio-video-cables-and-connectors";
+		}
+
+    $addData = $this->handeller->query("INSERT INTO `products` (`p_source`, `p_title`, `p_fulldes`, `p_image`, `p_category`, `p_cost_price`, `p_lowest_range`, `p_profit`, `p_ean`, `p_upc`, `p_model`, `p_mpn`, `p_length`, `p_width`, `p_height`, `p_weight`, `p_brand`, `p_self_id`, `p_qty`, `p_saleprice`, `p_batch_id`, `p_amazon_status`, `p_status`, `time`) VALUES ('petra', '$name', '$desc', '$image', '$category', '$cost_price', '', '', '', '$upc', '', '', '$lenth', '$width', '$height', '$width', '$brand', '', '$qty', '$price', '', '', '', NOW())");
+
+    if($weight <= '10' && $lenth <= '23' && $height <= '23' && $width <= '23' && $row['pt_returnable'] == 'Y' && $row['pt_refurbish'] == 'N') {
+
+    }
+  }
 }
