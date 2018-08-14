@@ -4,6 +4,7 @@ require_once('inc/middleware.php');
 
 $api = new API;
 $petra = new PetraApi;
+$products = new Products;
 
 if(Config::get('base.request_method') == 'POST') {
   if($_POST['type'] == 'dvr_action') {
@@ -24,5 +25,12 @@ if(Config::get('base.request_method') == 'POST') {
   if($_POST['type'] == 'petra_data') {
     $start = ($_POST['start'] - 1) * 100;
     $petra->get_data($start);
+  }
+}
+
+
+if(Config::get('base.request_method') == 'POST') {
+  if($_POST['type'] == 'products') {
+    $products->getProducts();
   }
 }

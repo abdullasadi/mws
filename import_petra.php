@@ -3,7 +3,14 @@ require_once('inc/middleware.php');
 
 $petra = new PetraApi;
 
-$petra->importData(2);
+if(Config::get('base.request_method') == 'POST') {
+  $ids = $_POST['checkbox'];
+  foreach ($ids as $id) {
+    $petra->importData($id);
+  }
+
+  header('location:import_petra.php?token=' . Config::get('csrf_token'));
+}
 
 require('inc/header.php');
 require('inc/navbar.php');

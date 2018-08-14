@@ -124,9 +124,9 @@ class PetraApi extends Db {
 
   public function get_data($start) {
     $products = array();
-    $totalQry = $this->handeller->query("SELECT * FROM `petra_products` WHERE pt_sku NOT IN (SELECT p_model FROM dvr_products)");
+    $totalQry = $this->handeller->query("SELECT * FROM `petra_products` WHERE pt_sku NOT IN (SELECT p_model FROM products)");
     $totalCount = $totalQry->rowCount();
-    $qry = $this->handeller->query("SELECT * FROM `petra_products` WHERE pt_sku NOT IN (SELECT p_model FROM dvr_products) ORDER BY pt_id ASC LIMIT $start, 100");
+    $qry = $this->handeller->query("SELECT * FROM `petra_products` WHERE pt_sku NOT IN (SELECT p_model FROM products) ORDER BY pt_id ASC LIMIT $start, 100");
     $rows = $qry->fetchAll(PDO::FETCH_ASSOC);
     foreach($rows as $row){
       $p = [
@@ -172,6 +172,11 @@ class PetraApi extends Db {
     $name = str_replace('GOPRO', '', $name);
     $desc = $name;
 
+    $brand = str_replace('(TM)', '', $brand);
+    $brand = str_replace('(R)', '', $brand);
+    $brand = str_replace('GOPRO', '', $brand);
+
+
     if($row['pt_cost_price'] <= '10'){
 			$price = (((50/100) * $row['pt_cost_price']) + $row['pt_cost_price'])+7;
 		}elseif($row['pt_cost_price'] >= '11' && $row['pt_cost_price'] <= '30'){
@@ -206,10 +211,8 @@ class PetraApi extends Db {
 			$cats = "audio-video-cables-and-connectors";
 		}
 
-    $addData = $this->handeller->query("INSERT INTO `products` (`p_source`, `p_title`, `p_fulldes`, `p_image`, `p_category`, `p_cost_price`, `p_lowest_range`, `p_profit`, `p_ean`, `p_upc`, `p_model`, `p_mpn`, `p_length`, `p_width`, `p_height`, `p_weight`, `p_brand`, `p_self_id`, `p_qty`, `p_saleprice`, `p_batch_id`, `p_amazon_status`, `p_status`, `time`) VALUES ('petra', '$name', '$desc', '$image', '$category', '$cost_price', '', '', '', '$upc', '', '', '$lenth', '$width', '$height', '$width', '$brand', '', '$qty', '$price', '', '', '', NOW())");
-
     if($weight <= '10' && $lenth <= '23' && $height <= '23' && $width <= '23' && $row['pt_returnable'] == 'Y' && $row['pt_refurbish'] == 'N') {
-
+      $addData = $this->handeller->query("INSERT INTO `products` (`p_source`, `p_title`, `p_fulldes`, `p_image`, `p_category`, `p_cost_price`, `p_lowest_range`, `p_profit`, `p_ean`, `p_upc`, `p_model`, `p_mpn`, `p_length`, `p_width`, `p_height`, `p_weight`, `p_brand`, `p_self_id`, `p_qty`, `p_saleprice`, `p_batch_id`, `p_amazon_status`, `p_status`, `time`) VALUES ('petra', '$name', '$desc', '$image', '$cats', '$cost_price', '', '', '', '$upc', '$sku', '', '$lenth', '$width', '$height', '$width', '$brand', '', '$qty', '$price', '', '', '', NOW())");
     }
   }
 }

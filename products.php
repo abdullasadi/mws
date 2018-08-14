@@ -1,5 +1,5 @@
 <?php
-// require_once('inc/middleware.php');
+require_once('inc/middleware.php');
 
 
 
@@ -26,7 +26,7 @@ require('inc/navbar.php');
     </div>
     <!-- /Title -->
     <div class="row">
-					
+
       <!-- Bordered Table -->
       <div class="col-sm-12">
         <div class="panel panel-default card-view">
@@ -40,8 +40,8 @@ require('inc/navbar.php');
                         <th>Image</th>
                         <th>Name</th>
                         <th>Price</th>
+                        <th>Cost Price</th>
                         <th>Model</th>
-                        <th>Status</th>
                         <th class="text-nowrap">Action</th>
                       </tr>
                     </thead>
@@ -65,10 +65,32 @@ require('inc/navbar.php');
         </div>
       </div>
       <!-- /Bordered Table -->
-      
+
     </div>
   </div>
 </div>
+
+<?php
+  require('inc/scripts.php');
+?>
+
+<script type="text/javascript">
+  (function() {
+    console.log('loaded');
+    $.ajax({
+      url: "ajax_request.php",
+      type: 'POST',
+      // dataType: 'json',
+      contex: this,
+      data: {
+        'token': '<?php echo Config::get('csrf_token'); ?>',
+        'type': 'products'
+      }
+    }).done(function(results) {
+      console.log(results);
+    })
+  })();
+</script>
 
 <?php
 require('inc/footer.php');
