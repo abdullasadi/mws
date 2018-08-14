@@ -1,6 +1,9 @@
 <?php
 require_once('inc/middleware.php');
 
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+  print_r($_POST);
+}
 
 require('inc/header.php');
 require('inc/navbar.php');
@@ -32,6 +35,7 @@ require('inc/navbar.php');
             <div class="panel-body">
               <div class="table-wrap mt-40">
                 <div class="table-responsive">
+                <form class="petraForm" action="import_petra.php" method="post">
                   <table class="table table-hover table-bordered mb-0">
                     <thead>
                       <tr>
@@ -46,10 +50,12 @@ require('inc/navbar.php');
                         <th class="text-nowrap">Action</th>
                       </tr>
                     </thead>
-                    <tbody class="product-tr">
+                      <input type="hidden" name="token" value="<?php echo Config::get('csrf_token'); ?>">
+                      <tbody class="product-tr">
 
-                    </tbody>
+                      </tbody>
                   </table>
+                </form>
                 </div>
               </div>
               <div class="btn-group mt-4 pull-right table-pagination">
@@ -260,7 +266,21 @@ require('inc/navbar.php');
     });
 
 
-
+    // Import Button click
+    $(document).on('click', '.petra', function() {
+      $('.petraForm').submit();
+    });
+    
+    //
+    // (function($){
+    //   $("body").on("submit", ".petraForm", function(e){
+    //     e.preventDefault();
+    //     var form = $(e.target);
+    //     $.post( form.attr("action"), form.serialize(), function(res){
+    //         console.log($(".petraForm").serializeArray());
+    //     });
+    //   });
+    // })(jQuery);
 
 </script>
 
