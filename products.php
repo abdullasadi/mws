@@ -45,17 +45,8 @@ require('inc/navbar.php');
                         <th class="text-nowrap">Action</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td class="product-img-td">
-                          <img class="product-table-img" src="http://via.placeholder.com/150x150" alt="">
-                        </td>
-                        <td>Lunar probe project</td>
-                        <td>124$</td>
-                        <td>May 15, 2015</td>
-                        <td>In Stock</td>
-                        <td class="text-nowrap"><a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a> <a href="#" data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger"></i> </a> </td>
-                      </tr>
+                    <tbody class="product-tr">
+
                     </tbody>
                   </table>
                 </div>
@@ -76,18 +67,51 @@ require('inc/navbar.php');
 
 <script type="text/javascript">
   (function() {
-    console.log('loaded');
+    $('.product-tr').html(`
+      <tr class="center">
+        <td>
+          <i class="fa fa-spin fa-spinner"></i>
+        </td>
+        <td>
+          <i class="fa fa-spin fa-spinner"></i>
+        </td>
+        <td>
+          <i class="fa fa-spin fa-spinner"></i>
+        </td>
+        <td>
+          <i class="fa fa-spin fa-spinner"></i>
+        </td>
+        <td>
+          <i class="fa fa-spin fa-spinner"></i>
+        </td>
+        <td>
+          <i class="fa fa-spin fa-spinner"></i>
+        </td>
+      </tr>
+      `);
     $.ajax({
       url: "ajax_request.php",
       type: 'POST',
-      // dataType: 'json',
+      dataType: 'json',
       contex: this,
       data: {
         'token': '<?php echo Config::get('csrf_token'); ?>',
         'type': 'products'
       }
     }).done(function(results) {
-      console.log(results);
+      $('.product-tr').empty();
+      for(let product of results) {
+        $('.product-tr').append(`<tr>
+          <td class="product-img-td">
+            <img class="product-table-img" src="${product.image}" alt="">
+          </td>
+          <td>${product.name}</td>
+          <td>${product.price}</td>
+          <td>${product.cost_price}</td>
+          <td>${product.model}</td>
+          <td class="text-nowrap"><a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a> <a href="#" data-toggle="tooltip" data-original-title="Close"> <i class="fa fa-close text-danger"></i> </a> </td>
+        </tr>`);
+      }
     })
   })();
 </script>

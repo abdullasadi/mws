@@ -7,11 +7,15 @@ class Products extends Db {
 
     foreach($rows as $row){
       $p = [
+        'name' =>  $row['p_title'],
+        'image' => $row['p_image'],
+        'price' => $row['p_saleprice'],
+        'cost_price' => $row['p_cost_price'],
         'model' => $row['p_model']
       ];
       array_push($products, $p);
     }
 
-    return $products;
+    echo json_encode($products);
   }
 }
